@@ -3,6 +3,8 @@ import { RefresherCustomEvent } from '@ionic/angular';
 import { ContactComponent } from '../contact/contact.component';
 
 import { DataService, Contact } from '../services/data.service';
+import { AuthService } from '../services/auth.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-home',
@@ -11,7 +13,12 @@ import { DataService, Contact } from '../services/data.service';
 })
 export class HomePage {
   private data = inject(DataService);
-  constructor() {}
+  constructor(private authService: AuthService, private router: Router) {}
+
+  logout(): void {
+    this.authService.logout();
+    this.router.navigate(['/authentication']);
+  }
 
   refresh(ev: any) {
     setTimeout(() => {
@@ -21,5 +28,9 @@ export class HomePage {
 
   getContacts(): Contact[] {
     return this.data.getContacts();
+  }
+
+  getFullName(): string{
+    return this.authService.fullName;
   }
 }

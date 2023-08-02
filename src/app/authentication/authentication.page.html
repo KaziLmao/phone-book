@@ -1,0 +1,30 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Log in page</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+
+<ion-content [fullscreen]="true">
+  <ion-grid class="main-grid">
+
+    <ion-row class="ion-text-center">
+      <ion-col class="ion-text-center" size-lg="4" offset-lg="4" class="login-box">
+
+        <span class="app-name-main">Phone Book</span>
+        <br>
+        <h5>Log in into your account!</h5>
+
+        <ion-item>
+          <ion-input label="Username" labelPlacement="floating" [(ngModel)]="userName"></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-input label="Password" labelPlacement="floating"  type="password" [(ngModel)]="password"></ion-input>
+        </ion-item>
+        <ion-button expand="full" (click)="login()">Login</ion-button>
+        <br>
+        Don't have account? <span routerLink="/registration" style="color:#51cccc; cursor: pointer;">Register</span>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-content>

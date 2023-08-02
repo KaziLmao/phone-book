@@ -2,6 +2,7 @@
   <ion-toolbar>
     <ion-title>
       Main page
+      <h2>{{ getFullName() }}</h2>
     </ion-title>
   </ion-toolbar>
 </ion-header>
@@ -14,4 +15,5 @@
   <ion-list>
     <app-contact *ngFor="let contact of getContacts()" [contact]="contact"></app-contact>
   </ion-list>
+  <ion-button class="logout-box" expand="block" (click)="logout()">Logout</ion-button>
 </ion-content>

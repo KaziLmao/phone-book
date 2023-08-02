@@ -1,0 +1,25 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title>Registration</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <ion-grid class="main-grid">
+
+    <ion-row class="ion-text-center">
+      <ion-col class="ion-text-center" size-lg="4" offset-lg="4" class="login-box">
+        <ion-item>
+          <ion-input label="Fullname" labelPlacement="floating" [(ngModel)]="fullName"></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-input label="username" labelPlacement="floating" [(ngModel)]="userName"></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-input label="Password" labelPlacement="floating"  type="password" [(ngModel)]="password"></ion-input>
+        </ion-item>
+        <ion-button expand="full" (click)="register()">Sign up</ion-button>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-content>
