@@ -1,18 +1,22 @@
-import { Component, inject } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { RefresherCustomEvent } from '@ionic/angular';
 import { ContactComponent } from '../contact/contact.component';
 
-import { DataService, Contact } from '../services/data.service';
+import { DataService } from '../services/data.service';
 import { AuthService } from '../services/auth.service';
 import { Router } from '@angular/router';
+import { Contacts } from '@capacitor-community/contacts';
 
 @Component({
   selector: 'app-home',
   templateUrl: 'home.page.html',
   styleUrls: ['home.page.scss'],
 })
-export class HomePage {
+export class HomePage implements OnInit{
   private data = inject(DataService);
+
+  contacts = [];
+  
   constructor(private authService: AuthService, private router: Router) {}
 
   logout(): void {
@@ -26,11 +30,24 @@ export class HomePage {
     }, 3000);
   }
 
-  getContacts(): Contact[] {
-    return this.data.getContacts();
+  ngOnInit(){
+    this.getContacts();
   }
 
-  getFullName(): string{
-    return this.authService.fullName;
+  async getContacts(){
+    try{
+      const premission = await Contacts.requestPermissions();
+      console.log('Premission: ', premission.contacts);
+    }catch(e){
+      console.log(e);
+    }
   }
+
+  // getListContacts(): {
+  //   return ;
+  // }
+
+  // getFullName(): string{
+  //   return ;
+  // }
 }

@@ -1,6 +1,9 @@
 import { ChangeDetectionStrategy, Component, inject, Input } from '@angular/core';
-import { Platform } from '@ionic/angular';
-import { Contact } from '../services/data.service';
+import { Platform, isPlatform } from '@ionic/angular';
+import { Contacts } from '@capacitor-community/contacts';
+import { Plugin } from '@capacitor/core';
+
+// const {Contacts} = Plugin;
 
 @Component({
   selector: 'app-contact',
@@ -10,8 +13,18 @@ import { Contact } from '../services/data.service';
 })
 export class ContactComponent {
   private platform = inject(Platform);
-  @Input() contact?: Contact;
+
+  async loadContacts() {
+    if(isPlatform('android')){
+      await Contacts.requestPermissions();
+    }
+  }
+
+  isAndroid(){
+    return this.platform.is('android');
+  }
+
   isIos() {
-    return this.platform.is('ios')
+    return this.platform.is('ios');
   }
 }
