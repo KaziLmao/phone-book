@@ -1,0 +1,8 @@
+{
+  "name": "PhoneBook",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular",
+  "id": "ce109718"
+}
