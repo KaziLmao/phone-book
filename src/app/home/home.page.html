@@ -1,19 +1,23 @@
-<ion-header [translucent]="true">
-  <ion-toolbar>
+<ion-header>
+  <ion-toolbar color="primary">
     <ion-title>
       Main page
-      <!-- <h2>{{ getFullName() }}</h2> -->
     </ion-title>
   </ion-toolbar>
 </ion-header>
-
-<ion-content [fullscreen]="true">
-  <ion-refresher slot="fixed" (ionRefresh)="refresh($event)">
-    <ion-refresher-content></ion-refresher-content>
-  </ion-refresher>
-  
-  <ion-list>
-    <!-- <app-contact *ngFor="let contact of getContacts()" [contact]="contact"></app-contact> -->
-  </ion-list>
-  <ion-button class="logout-box" expand="block" (click)="logout()">Logout</ion-button>
+<ion-list>
+  <ion-item *ngFor="let barcode of barcodes">
+    <ion-label position="stacked">{{ barcode.format }}</ion-label>
+    <ion-input type="text" [value]="barcode.rawValue"></ion-input>
+  </ion-item>
+</ion-list>
+<ion-fab slot="fixed" vertical="right" horizontal="end">
+  <ion-fab-button (click)="scan()" [disabled]="!isSupported">
+    <ion-icon name="scan"></ion-icon>
+  </ion-fab-button>
+</ion-fab>
+<ion-content>
+  <ion-item>
+    <ion-button class="logout-box" expand="block" (click)="logout()">Logout</ion-button>
+  </ion-item>
 </ion-content>

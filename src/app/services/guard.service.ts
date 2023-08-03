@@ -13,7 +13,7 @@ export class GuardService {
     if (this.authService.isAuthenticatedUser()) {
       return true;
     } else {
-      this.router.navigate(['/login']);
+      this.router.navigate(['/authentication']);
       return false;
     }
   }
