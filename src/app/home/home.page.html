@@ -19,7 +19,6 @@
 
 <ion-content>
 
-  {{contacts[0] | json}}
   <ion-list *ngIf="contacts?.length > 0">
     <ion-item *ngFor="let contact of contacts">
       <ion-label>
