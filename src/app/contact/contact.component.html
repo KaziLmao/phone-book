@@ -1,9 +1,9 @@
-<!-- <ion-item *ngIf="contact" [routerLink]="'/contact/' + contact.id" [detail]="false"> -->
+<!-- <ion-item *ngFor="let contact of contacts" [routerLink]="'/contact/' + contact.contactId" [detail]="false"> -->
   <ion-label class="ion-text-wrap">
     <h2>
       <!-- {{ contact.fromName }} -->
       <span class="date">
-        <ion-icon aria-hidden="true" name="chevron-forward" size="small" *ngIf="isIos()"></ion-icon>
+        <ion-icon aria-hidden="true" name="chevron-forward" size="small"></ion-icon>
       </span>
     </h2>
     <!-- <h3>{{ contact.phoneNumber }}</h3> -->

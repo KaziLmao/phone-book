@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, inject, Input } from '@angular/core';
-import { Platform, isPlatform } from '@ionic/angular';
+import { Platform } from '@ionic/angular';
 
 @Component({
   selector: 'app-contact',
@@ -9,12 +9,4 @@ import { Platform, isPlatform } from '@ionic/angular';
 })
 export class ContactComponent {
   private platform = inject(Platform);
-
-  isAndroid(){
-    return this.platform.is('android');
-  }
-
-  isIos() {
-    return this.platform.is('ios');
-  }
 }

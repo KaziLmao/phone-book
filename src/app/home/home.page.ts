@@ -3,7 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../services/auth.service';
 import { Router } from '@angular/router';
 import { Contacts } from '@capacitor-community/contacts';
-import { Barcode, BarcodeScanner } from '@capacitor-mlkit/barcode-scanning';
+import { Barcode, BarcodeScanner, BarcodeFormat, LensFacing } from '@capacitor-mlkit/barcode-scanning';
 import { AlertController } from '@ionic/angular';
 
 @Component({
@@ -12,10 +12,11 @@ import { AlertController } from '@ionic/angular';
   styleUrls: ['home.page.scss'],
 })
 export class HomePage implements OnInit{
+  static getSavedContacts() {
+    throw new Error('Method not implemented.');
+  }
 
   contacts: any[] = [];
-  contacts1:any = "WTF";
-  test: string = 'HELLOOO';
 
   isSupported = false;
   barcodes: Barcode[] = [];
@@ -31,8 +32,7 @@ export class HomePage implements OnInit{
   }
 
   ngOnInit(){
-    this.requestPermissionContact();
-    // this.getContacts();
+    this.getContactsList()
     BarcodeScanner.isSupported().then((result) => {
       this.isSupported = result.supported;
     });
@@ -62,55 +62,38 @@ export class HomePage implements OnInit{
     await alert.present();
   }
 
-  async getContactsList():Promise<void> {
-    try{
-      const result = await Contacts.getContacts({projection: 
-        {
-          name: true,
-          phones: true,
-          emails: true,
-          image: true
-        }
-      });
-      this.contacts = result.contacts;
-      console.log(this.contacts);
-    }catch(error){
-      console.error(error);
-    }
-  }
 
-  public async requestPermissionContact(): Promise<void> {
+  async getContactsList(){
     try{
       const permission = await Contacts.requestPermissions();
-      if(permission?.contacts == 'granted'){
-        this.getContactsList();
-      } else {
-        console.log('Permission denied');
+      console.log('permission', permission.contacts);
+      if (permission.contacts === 'denied') {
+        return;
       }
-    }catch(error){
-      console.error(error);
+      else if(permission.contacts === 'granted'){
+        const result = await Contacts.getContacts({
+          projection: {
+            name: true,
+            phones: true,
+            emails: true
+          }
+        });
+        console.log('result: ', result);
+        this.contacts = result.contacts;
+        console.log(this.contacts);
+      }else {
+        const requestPermission = await Contacts.requestPermissions();
+        if (requestPermission.contacts === 'granted') {
+          this.getContactsList();
+        }
+      }
+    }catch(e){
+      console.log(e);
     }
   }
 
-  // async getContacts(){
-  //   try{
-  //     const permission = await Contacts.requestPermissions();
-  //     console.log('permission', permission.contacts);
-  //     if(!permission?.contacts) return;
-  //     else if(permission?.contacts == 'granted'){
-  //       const result = await Contacts.getContacts({
-  //         projection: {
-  //           name: true,
-  //           phones: true,
-  //           emails: true
-  //         }
-  //       });
-  //       console.log('result: ', result);
-  //       this.contacts1 = result.contacts;
-  //       console.log(this.contacts1);
-  //     }
-  //   }catch(e){
-  //     console.log(e);
-  //   }
-  // }
+  joinNumbers(array: any[]){
+    return array.map(x => x.number).join(' | ');
+  }
+
 }

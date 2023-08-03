@@ -16,8 +16,28 @@
     <ion-icon name="scan"></ion-icon>
   </ion-fab-button>
 </ion-fab>
+
 <ion-content>
-  <ion-item>
-    <ion-button class="logout-box" expand="block" (click)="logout()">Logout</ion-button>
-  </ion-item>
+
+  {{contacts[0] | json}}
+  <ion-list *ngIf="contacts?.length > 0">
+    <ion-item *ngFor="let contact of contacts">
+      <ion-label>
+        {{contact?.name?.display}}
+        
+        <p style="margin-top: 4px;">
+          {{joinNumbers(contact?.phones)}}
+        </p>
+        <p *ngIf="contact?.emails">
+          <ion-text>
+            {{contact?.emails[0]?.address}}
+          </ion-text>
+        </p>
+
+      </ion-label>
+    </ion-item>
+  </ion-list>
+  
+  <ion-button class="logout-box" expand="block" (click)="logout()">Logout</ion-button>
+
 </ion-content>

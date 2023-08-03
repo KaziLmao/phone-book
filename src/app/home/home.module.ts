@@ -15,6 +15,7 @@ import { ContactComponentModule } from '../contact/contact.module';
     ContactComponentModule,
     HomePageRoutingModule
   ],
-  declarations: [HomePage]
+  declarations: [HomePage],
+  exports: [HomePage]
 })
 export class HomePageModule {}
