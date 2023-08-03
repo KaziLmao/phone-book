@@ -2,7 +2,7 @@ import { CommonModule } from '@angular/common';
 import { Component, inject, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { IonicModule, Platform } from '@ionic/angular';
-import { DataService } from '../services/data.service';
+import { HomePage } from '../home/home.page';
 
 @Component({
   selector: 'app-view-contact',
@@ -10,9 +10,9 @@ import { DataService } from '../services/data.service';
   styleUrls: ['./view-contact.page.scss'],
 })
 export class ViewContactPage implements OnInit {
-  private data = inject(DataService);
   private activatedRoute = inject(ActivatedRoute);
   private platform = inject(Platform);
+  // public contacts: any = HomePage.getSavedContacts();
 
   constructor() {}
 
@@ -21,7 +21,7 @@ export class ViewContactPage implements OnInit {
   }
 
   getBackButtonText() {
-    const isIos = this.platform.is('ios')
-    return isIos ? 'Inbox' : '';
+    const isOs = this.platform.is('ios'||'android');
+    return isOs ? 'Inbox' : '';
   }
 }

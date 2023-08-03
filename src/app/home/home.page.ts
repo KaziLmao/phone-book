@@ -12,13 +12,9 @@ import { AlertController } from '@ionic/angular';
   styleUrls: ['home.page.scss'],
 })
 export class HomePage implements OnInit{
-  static getSavedContacts() {
-    throw new Error('Method not implemented.');
-  }
 
   contacts: any[] = [];
 
-  isSupported = false;
   barcodes: Barcode[] = [];
   
   constructor(
@@ -33,15 +29,12 @@ export class HomePage implements OnInit{
 
   ngOnInit(){
     this.getContactsList()
-    BarcodeScanner.isSupported().then((result) => {
-      this.isSupported = result.supported;
-    });
+    this.startScanner();
   }
 
   async scan(): Promise<void> {
     const granted = await this.requestPermissionsCamera();
     if (!granted) {
-      this.presentAlert();
       return;
     }
     const { barcodes } = await BarcodeScanner.scan();
@@ -53,15 +46,30 @@ export class HomePage implements OnInit{
     return camera === 'granted' || camera === 'limited';
   }
 
-  async presentAlert(): Promise<void> {
-    const alert = await this.alertController.create({
-      header: 'Permission denied',
-      message: 'Please grant camera permission to use the barcode scanner.',
-      buttons: ['OK'],
-    });
-    await alert.present();
+  async presentAlert(result): Promise<void> {
+    if(!this.requestPermissionsCamera()){
+      const alert = await this.alertController.create({
+        header: 'Permission denied',
+        message: 'Please grant camera permission to use the barcode scanner.',
+        buttons: ['OK'],
+      });
+      await alert.present();
+    }else{
+      const alert = await this.alertController.create({
+        header: 'Barcode scan',
+        message: result,
+        buttons: ['OK'],
+      });
+      await alert.present();
+    }
+    
   }
 
+  async startScanner(){
+    await this.requestPermissionsCamera();
+    const result = await BarcodeScanner.startScan();
+    this.presentAlert(result);
+  }
 
   async getContactsList(){
     try{

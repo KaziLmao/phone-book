@@ -1,5 +1,6 @@
 import { ChangeDetectionStrategy, Component, inject, Input } from '@angular/core';
 import { Platform } from '@ionic/angular';
+import { HomePage } from '../home/home.page';
 
 @Component({
   selector: 'app-contact',
@@ -9,4 +10,5 @@ import { Platform } from '@ionic/angular';
 })
 export class ContactComponent {
   private platform = inject(Platform);
+
 }
